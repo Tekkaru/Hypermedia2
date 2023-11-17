@@ -8,10 +8,13 @@
 </head>
 <body>
     <div id="hangman-container">
-        <div id="word-display"></div>
-        <input type="text" id="letter-input" maxlength="1" placeholder="Enter a letter">
-        <button onclick="guessLetter()">Guess</button>
+        <img id="hangman-image" src="Images/hangman_0.png" alt="Hangman Image">
     </div>
+
+    <div id="word-display"></div>
+
+    <input type="text" id="letter-input" placeholder="Enter a letter">
+    <button onclick="guessLetter()">Guess</button>
 
     <script src="script.js"></script>
 </body>

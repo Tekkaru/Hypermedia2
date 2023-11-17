@@ -1,10 +1,14 @@
 const wordCandidates = ["javascript", "hangman", "web", "project", "coding", "bootstrap", "framework", "creative", "prototype", "group"];
 
-let selectedWord = "";
+let selectedWord = wordCandidates[Math.floor(Math.random() * wordCandidates.length)];
 let guessedLetters = [];
+let incorrectAttempts = 0;
 
 function initializeGame() {
     selectedWord = wordCandidates[Math.floor(Math.random() * wordCandidates.length)];
+    guessedLetters = [];
+    incorrectAttempts = 0;
+    updateHangmanImage(); // Agregamos esta línea para mostrar la imagen inicial
     updateWordDisplay();
 }
 
@@ -18,39 +22,52 @@ function guessLetter() {
 
             if (selectedWord.includes(letter)) {
                 updateWordDisplay();
+            } else {
+                incorrectAttempts++;
+                updateHangmanImage();
             }
 
-            inputElement.value = ""; // Clear the input field after guessing
+            inputElement.value = "";
 
             if (wordIsGuessed()) {
                 endGame(true);
+            } else if (incorrectAttempts >= 9) {
+                endGame(false);
             }
         } else {
-            alert("You've already tried this letter. Try another one.");
+            alert("Ya has intentado esta letra. Prueba otra.");
         }
     } else {
-        alert("Enter a valid letter.");
+        alert("Ingresa una letra válida.");
     }
 }
 
 function updateWordDisplay() {
-    const display = selectedWord
-        .split('')
-        .map(char => (guessedLetters.includes(char) || char === " ") ? char : "_")
-        .join(" ");
-
-    document.getElementById("word-display").innerHTML = display;
+    let display = "";
+    for (let char of selectedWord) {
+        if (guessedLetters.includes(char) || char === " ") {
+            display += char + " ";
+        } else {
+            display += "_ ";
+        }
+    }
+    document.getElementById("word-display").innerText = display.trim();
 }
 
 function wordIsGuessed() {
     return selectedWord.split('').every(char => guessedLetters.includes(char) || char === " ");
 }
 
+function updateHangmanImage() {
+    const hangmanImage = document.getElementById("hangman-image");
+    hangmanImage.src = `Images/hangman_${incorrectAttempts}.png`;
+}
+
 function endGame(isWinner) {
     if (isWinner) {
-        alert("Congratulations! You've guessed the word.");
+        alert("¡Felicidades! Has adivinado la palabra.");
     } else {
-        alert("Sorry, you've lost. The word was: " + selectedWord);
+        alert("Lo siento, has perdido. La palabra era: " + selectedWord);
     }
 
     guessedLetters = [];

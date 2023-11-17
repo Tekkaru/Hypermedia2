@@ -74,3 +74,17 @@ button:hover {
 #word-display {
     animation: fadeIn 1s ease-in-out;
 }
+
+/* Estilos existentes */
+
+#hangman-container {
+    position: relative;
+}
+
+#hangman-image {
+    width: 200px; /* Ajusta el ancho según tus necesidades */
+    height: auto;
+    max-height: 300px; /* Ajusta la altura máxima según tus necesidades */
+    position: absolute;
+    bottom: 0;
+}
